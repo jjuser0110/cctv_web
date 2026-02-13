@@ -28,8 +28,17 @@ class User extends Authenticatable
         'username',
         'role_id',
         'is_active',
-        'branch_id',
-        'company_id',
+        'personId',
+        'personCode',
+        'orgIndexCode',
+        'personFamilyName',
+        'personGivenName',
+        'gender',
+        'phoneNo',
+        'personPhoto',
+        'remark',
+        'beginTime',
+        'endTime',
     ];
 
     /**

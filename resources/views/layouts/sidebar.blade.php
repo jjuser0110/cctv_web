@@ -83,9 +83,9 @@ $currentRoute = request()->route()->getName();
         </li>
 
         <li class="menu-item">
-            <a href="{{ route('bank.index') }}" class="menu-link">
+            <a href="{{ route('user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-grid"></i>
-                <div>Setting</div>
+                <div>User</div>
             </a>
         </li>
     </ul>
