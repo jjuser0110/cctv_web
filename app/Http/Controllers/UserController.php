@@ -27,7 +27,7 @@ class UserController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://210.186.49.29/artemis/api/resource/v1/person/personList',
+            CURLOPT_URL => 'https://115.133.81.137/artemis/api/resource/v1/person/personList',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_SSL_VERIFYHOST => false,
