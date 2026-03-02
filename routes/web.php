@@ -17,7 +17,6 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::post('/eventRcv', 'ApiController@eventRcv')->name('eventRcv');
 
 Auth::routes();
 
