@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::post('/eventRcv', 'ApiController@eventRcv')->name('eventRcv');
 
-// Auth::routes();
+Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/change_password', [App\Http\Controllers\HomeController::class, 'change_password'])->name('change_password');
