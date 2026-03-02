@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
 {
-    public function motiondetect(Request $request)
+    public function eventRcv(Request $request)
     {
         Log::info('Motion detected: ' . $request->getContent());
     }
