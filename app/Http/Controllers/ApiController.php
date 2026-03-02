@@ -22,5 +22,6 @@ class ApiController extends Controller
     public function eventRcv(Request $request)
     {
         Log::info('Motion detected: ' . $request->getContent());
+        return response()->json(['message' => 'Event received successfully']);
     }
 }
