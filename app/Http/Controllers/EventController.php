@@ -17,7 +17,7 @@ class EventController extends Controller
 {
     public function index(Request $request)
     {
-        $event = AlertResponse::all();
+        $event = AlertResponse::orderBy('created_at', 'desc')->get();
 
         return view('event.index')->with('event',$event);
     }
