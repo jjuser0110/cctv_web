@@ -27,12 +27,12 @@ class ApiController extends Controller
         // Process the event data as needed
         AlertResponse::create([
             'sendTime' => $response_data['params']['sendTime'] ?? null,
-            'eventId' => $response_data['params']['events']['eventId'] ?? null,
-            'eventType' => $response_data['params']['events']['eventType'] ?? null,
-            'status' => $response_data['params']['events']['status'] ?? null,
-            'human_id' => $response_data['params']['events']['data']['alarmResult']['faces']['identify']['candidate']['human_id'] ?? null,
-            'name' => $response_data['params']['events']['data']['alarmResult']['faces']['identify']['candidate']['reserve_field']['name'] ?? null,
-            'wearMaskStatus' => $response_data['params']['events']['data']['alarmResult']['faces']['mask']['wearMaskStatus'] ?? null,
+            'eventId' => $response_data['params']['events'][0]['eventId'] ?? null,
+            'eventType' => $response_data['params']['events'][0]['eventType'] ?? null,
+            'status' => $response_data['params']['events'][0]['status'] ?? null,
+            'human_id' => $response_data['params']['events'][0]['data']['alarmResult']['faces']['identify']['candidate']['human_id'] ?? null,
+            'name' => $response_data['params']['events'][0]['data']['alarmResult']['faces']['identify']['candidate']['reserve_field']['name'] ?? null,
+            'wearMaskStatus' => $response_data['params']['events'][0]['data']['alarmResult']['faces']['mask']['wearMaskStatus'] ?? null,
             'response_data' => $response_data,
         ]);
         return response()->json(['message' => 'Event received successfully']);
