@@ -22,6 +22,18 @@ class ApiController extends Controller
     public function eventRcv(Request $request)
     {
         Log::info('Motion detected: ' . $request->getContent());
+        $response_data = json_decode($request->getContent(), true);
+        // Process the event data as needed
+        AlertResponse::create([
+            'sendTime' => $response_data['params']['sendTime'] ?? null,
+            'eventId' => $response_data['params']['events']['eventId'] ?? null,
+            'eventType' => $response_data['params']['events']['eventType'] ?? null,
+            'status' => $response_data['params']['events']['status'] ?? null,
+            'human_id' => $response_data['params']['events']['data']['alarmResult']['faces']['identify']['candidate']['human_id'] ?? null,
+            'name' => $response_data['params']['events']['data']['alarmResult']['faces']['identify']['candidate']['reserve_field']['name'] ?? null,
+            'wearMaskStatus' => $response_data['params']['events']['data']['alarmResult']['faces']['mask']['wearMaskStatus'] ?? null,
+            'response_data' => $response_data,
+        ]);
         return response()->json(['message' => 'Event received successfully']);
     }
 }
