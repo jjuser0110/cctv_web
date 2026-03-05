@@ -26,7 +26,7 @@ class ApiController extends Controller
         $response_data = json_decode($request->getContent(), true);
         // Process the event data as needed
         AlertResponse::create([
-            'sendTime' => $response_data['params']['sendTime'] ?? null,
+            'sendTime' => Carbon::parse($response_data['params']['sendTime'] ?? null),
             'eventId' => $response_data['params']['events'][0]['eventId'] ?? null,
             'eventType' => $response_data['params']['events'][0]['eventType'] ?? null,
             'status' => $response_data['params']['events'][0]['status'] ?? null,
