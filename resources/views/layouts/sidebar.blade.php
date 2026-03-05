@@ -88,6 +88,12 @@ $currentRoute = request()->route()->getName();
                 <div>User</div>
             </a>
         </li>
+        <li class="menu-item">
+            <a href="{{ route('event.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-grid"></i>
+                <div>Event</div>
+            </a>
+        </li>
     </ul>
 </aside>
 <!-- end: sidebar -->
