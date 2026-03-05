@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\AlertResponse;
 use App\Models\UserBank;
 use App\Models\UserAngpao;
 use App\Models\UserBonus;
