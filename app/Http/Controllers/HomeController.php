@@ -9,6 +9,7 @@ use App\Models\Package;
 use App\Models\PackageInvoice;
 use App\Models\BankAccount;
 use App\Models\DailyReport;
+use App\Models\AlertResponse;
 use Bouncer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -31,10 +32,18 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        
-        return view('home');
-    }
+        $member_present_today = AlertResponse::whereDate('sendTime', Carbon::today())->where('human_id','>',0)->groupBy('human_id')->select('human_id')->get();
 
+        $member_first_detected_today = AlertResponse::whereDate('sendTime', Carbon::today())->where('human_id','>',0)->groupBy('name')->selectRaw('name,MIN(sendTime) as first_detected')->get();
+
+        $member_after_9am = $member_first_detected_today->filter(function($item) {
+            return Carbon::parse($item->first_detected)->hour >= 9;
+        })->count();
+        // dd($member_after_9am);
+
+        return view('home', compact('member_present_today', 'member_first_detected_today', 'member_after_9am'));
+    }
+    
     public function change_password(Request $request){
         $user = Auth::user();
 
