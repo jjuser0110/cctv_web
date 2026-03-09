@@ -6,7 +6,7 @@
 
 <div class="container-xxl flex-grow-1 container-p-y">
   <div class="row">
-    <div class="col-lg-6 col-md-12">
+    <div class="col-lg-12 col-md-12">
       <div class="row">
         <!-- Referral Chart-->
         <div class="col-sm-6 col-12 mb-4">
