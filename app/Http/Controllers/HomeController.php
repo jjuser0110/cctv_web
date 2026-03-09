@@ -41,7 +41,9 @@ class HomeController extends Controller
         })->count();
         // dd($member_after_9am);
 
-        return view('home', compact('member_present_today', 'member_first_detected_today', 'member_after_9am'));
+        $registered = User::where('role_id',2)->get();
+
+        return view('home', compact('member_present_today', 'member_first_detected_today', 'member_after_9am', 'registered'));
     }
     
     public function change_password(Request $request){

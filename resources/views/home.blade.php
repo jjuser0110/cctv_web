@@ -12,6 +12,15 @@
         <div class="col-sm-6 col-12 mb-4">
           <div class="card">
             <div class="card-body text-center">
+              <h2 class="mb-1">{{$registered->count()}}</h2>
+              <span class="text-muted">Registered Members</span>
+              <div id="referralLineChart"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-12 mb-4">
+          <div class="card">
+            <div class="card-body text-center">
               <h2 class="mb-1">{{$member_present_today->count()}}</h2>
               <span class="text-muted">Member Present Today</span>
               <div id="referralLineChart"></div>
