@@ -9,7 +9,7 @@
     <div class="col-lg-12 col-md-12">
       <div class="row">
         <!-- Referral Chart-->
-        <div class="col-sm-6 col-12 mb-4">
+        <div class="col-sm-3 col-12 mb-4">
           <div class="card">
             <div class="card-body text-center">
               <h2 class="mb-1">{{$registered->count()}}</h2>
@@ -18,7 +18,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-6 col-12 mb-4">
+        <div class="col-sm-3 col-12 mb-4">
           <div class="card">
             <div class="card-body text-center">
               <h2 class="mb-1">{{$member_present_today->count()}}</h2>
@@ -27,7 +27,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-6 col-12 mb-4">
+        <div class="col-sm-3 col-12 mb-4">
           <div class="card">
             <div class="card-body text-center">
               <h2 class="mb-1">{{$member_after_9am}}</h2>
