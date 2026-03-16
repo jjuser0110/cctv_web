@@ -58,6 +58,7 @@ class HomeController extends Controller
 
         $registered = User::where('role_id',2)->get();
 
+        $today_date = $today_date->format('Y-m-d');
         return view('home', compact('member_present_today', 'member_first_detected_today', 'member_after_9am', 'registered','phone_calls_detected','today_date'));
     }
     

@@ -59,7 +59,7 @@
     <div class="col-lg-12 col-md-12">
       <div class="row">
         <!-- Referral Chart-->
-        <div class="col-sm-6 col-12 mb-4">
+        <div class="col-sm-12 col-12 mb-4">
           <div class="card">
             <div class="card-body text-center">
               <table class="dt-column-search table table-bordered" id="mytable">
