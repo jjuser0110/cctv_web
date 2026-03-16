@@ -32,9 +32,24 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $member_present_today = AlertResponse::whereDate('sendTime', Carbon::today())->where('human_id','>',0)->groupBy('human_id')->select('human_id')->get();
+        $today_date = $request->today_date
+        ? Carbon::parse($request->today_date)->startOfDay()
+        : Carbon::now()->startOfDay();
+        $member_present_today = AlertResponse::whereDate('sendTime', $today_date)->where('human_id','>',0)->groupBy('human_id')->select('human_id')->get();
 
-        $member_first_detected_today = AlertResponse::whereDate('sendTime', Carbon::today())->where('human_id','>',0)->groupBy('name')->selectRaw('name,MIN(sendTime) as first_detected')->get();
+        $member_first_detected_today = AlertResponse::whereDate('sendTime', $today_date)
+        ->where('human_id', '>', 0)
+        ->groupBy('name')
+        ->selectRaw('
+            name,
+            MIN(sendTime) as first_detected,
+            MAX(sendTime) as last_detected,
+            COUNT(*) as call_count,
+            COUNT(CASE WHEN wearMaskStatus = 1 THEN 1 END) as wear_mask_count
+        ')
+        ->get();
+
+        $phone_calls_detected = AlertResponse::whereDate('sendTime', $today_date)->where('human_id','>',0)->where('event_type', '3073')->where('status',1)->count();
 
         $member_after_9am = $member_first_detected_today->filter(function($item) {
             return Carbon::parse($item->first_detected)->hour >= 9;
@@ -43,7 +58,7 @@ class HomeController extends Controller
 
         $registered = User::where('role_id',2)->get();
 
-        return view('home', compact('member_present_today', 'member_first_detected_today', 'member_after_9am', 'registered'));
+        return view('home', compact('member_present_today', 'member_first_detected_today', 'member_after_9am', 'registered','phone_calls_detected','today_date'));
     }
     
     public function change_password(Request $request){
