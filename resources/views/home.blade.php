@@ -68,6 +68,7 @@
                           <th>Name</th>
                           <th>First Detected</th>
                           <th>Last Detected</th>
+                          <th>Duration</th>
                           <th>Total Detected</th>
                           <th>Wear Mask Count</th>
                       </tr>
@@ -78,6 +79,7 @@
                           <td>{{ $row->name }}</td>
                           <td>{{ $row->first_detected }}</td>
                           <td>{{ $row->last_detected }}</td>
+                          <td>{{ $row->duration_readable }}</td>
                           <td>{{ $row->call_count }}</td>
                           <td>{{ $row->wear_mask_count }}</td>
                       </tr>

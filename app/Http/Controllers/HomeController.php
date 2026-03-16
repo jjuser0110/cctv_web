@@ -38,16 +38,36 @@ class HomeController extends Controller
         $member_present_today = AlertResponse::whereDate('sendTime', $today_date)->where('human_id','>',0)->groupBy('human_id')->select('human_id')->get();
 
         $member_first_detected_today = AlertResponse::whereDate('sendTime', $today_date)
-        ->where('human_id', '>', 0)
-        ->groupBy('name')
-        ->selectRaw('
-            name,
-            MIN(sendTime) as first_detected,
-            MAX(sendTime) as last_detected,
-            COUNT(*) as call_count,
-            COUNT(CASE WHEN wearMaskStatus = 1 THEN 1 END) as wear_mask_count
-        ')
-        ->get();
+            ->where('human_id', '>', 0)
+            ->groupBy('name')
+            ->selectRaw('
+                name,
+                MIN(sendTime) as first_detected,
+                MAX(sendTime) as last_detected,
+                COUNT(*) as call_count,
+                COUNT(CASE WHEN wearMaskStatus = 1 THEN 1 END) as wear_mask_count,
+                TIMESTAMPDIFF(SECOND, MIN(sendTime), MAX(sendTime)) as duration_seconds
+            ')
+            ->get();
+
+        $member_first_detected_today->map(function ($item) {
+            $hours = floor($item->duration_seconds / 3600);
+            $minutes = floor(($item->duration_seconds % 3600) / 60);
+
+            $parts = [];
+
+            if ($hours > 0) {
+                $parts[] = $hours . ' ' . ($hours == 1 ? 'hour' : 'hours');
+            }
+
+            if ($minutes > 0) {
+                $parts[] = $minutes . ' ' . ($minutes == 1 ? 'minute' : 'minutes');
+            }
+
+            $item->duration_readable = implode(' ', $parts) ?: '0 minutes';
+
+            return $item;
+        });
 
         $phone_calls_detected = AlertResponse::whereDate('sendTime', $today_date)->where('human_id','>',0)->where('eventType', '3073')->where('status',1)->count();
 
