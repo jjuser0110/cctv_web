@@ -49,7 +49,7 @@ class HomeController extends Controller
         ')
         ->get();
 
-        $phone_calls_detected = AlertResponse::whereDate('sendTime', $today_date)->where('human_id','>',0)->where('event_type', '3073')->where('status',1)->count();
+        $phone_calls_detected = AlertResponse::whereDate('sendTime', $today_date)->where('human_id','>',0)->where('eventType', '3073')->where('status',1)->count();
 
         $member_after_9am = $member_first_detected_today->filter(function($item) {
             return Carbon::parse($item->first_detected)->hour >= 9;
