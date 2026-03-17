@@ -129,7 +129,7 @@
 @endsection
 @section('scripts')
 <script>
-  let lastTime = null;
+  let lastTime = sessionStorage.getItem('lastTime');
 
   setInterval(() => {
       fetch('/popup')
@@ -141,7 +141,7 @@
 
               // Only trigger if new
               if (lastTime !== res.messagetime) {
-                  lastTime = res.messagetime;
+                  sessionStorage.setItem('lastTime', res.messagetime);
                   showPopup(res.message, res.messagetime);
               }
           });
