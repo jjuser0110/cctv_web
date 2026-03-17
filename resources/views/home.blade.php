@@ -148,22 +148,19 @@
   }, 2000); // every 2 seconds
 
   function showPopup(message, time) {
+    // Set message
+    document.getElementById('popupMessage').innerText = message;
 
-      // Set message
-      document.getElementById('popupMessage').innerText = message;
+    // Format timestamp into readable date/time
+    let date = new Date(timestamp * 1000); // convert seconds → ms
+    document.getElementById('popupTime').innerText = date.toLocaleString();
 
-      // Format time (optional)
-      let date = new Date(time * 1000);
-      let formatted = date.toLocaleString();
+    // Show Bootstrap modal
+    let modal = new bootstrap.Modal(document.getElementById('popoutModal'));
+    modal.show();
 
-      document.getElementById('popupTime').innerText = formatted;
-
-      // Show Bootstrap modal
-      let modal = new bootstrap.Modal(document.getElementById('popoutModal'));
-      modal.show();
-      setTimeout(() => {
-          modal.hide();
-      }, 3000);
+    // Hide after 3 seconds
+    setTimeout(() => modal.hide(), 3000);
   }
 </script>
 @endsection
