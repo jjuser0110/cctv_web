@@ -58,7 +58,13 @@
     </div>
     <div class="col-lg-12 col-md-12">
       <div class="row">
-        <!-- Referral Chart-->
+        <!-- <button
+                          type="button"
+                          class="btn btn-primary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#popoutModal">
+                          Launch modal
+                        </button> -->
         <div class="col-sm-12 col-12 mb-4">
           <div class="card">
             <div class="card-body text-center">
@@ -93,17 +99,29 @@
     </div>
   </div>
 </div>
-<div id="popup" style="
-    display:none;
-    position:fixed;
-    top:20px;
-    right:20px;
-    background:red;
-    color:white;
-    padding:15px;
-    border-radius:5px;
-    z-index:9999;
-"></div>
+<div class="modal fade" id="popoutModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Pop Out Message</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="popupMessage">
+          This is a Bootstrap modal. You can use modals to display content in a
+          layer above the main content. Modals are streamlined, but flexible,
+          dialog prompts powered by JavaScript and CSS. They’re supported in
+          all modern browsers.
+        </p>
+        <b id="popupTime">23-03-2025 12:33:22</b>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- / Content -->
 
 @endsection
@@ -124,19 +142,27 @@
               if (lastTime !== res.time) {
                   lastTime = res.time;
 
-                  showPopup(res.message);
+                  showPopup(res.message, res.time);
               }
           });
   }, 2000); // every 2 seconds
 
-  function showPopup(message) {
-      let popup = document.getElementById('popup');
+  function showPopup(message, time) {
 
-      popup.innerText = message;
-      popup.style.display = 'block';
+      // Set message
+      document.getElementById('popupMessage').innerText = message;
 
+      // Format time (optional)
+      let date = new Date(time * 1000);
+      let formatted = date.toLocaleString();
+
+      document.getElementById('popupTime').innerText = formatted;
+
+      // Show Bootstrap modal
+      let modal = new bootstrap.Modal(document.getElementById('popoutModal'));
+      modal.show();
       setTimeout(() => {
-          popup.style.display = 'none';
+          modal.hide();
       }, 3000);
   }
 </script>
