@@ -42,13 +42,13 @@ class ApiController extends Controller
         ]);
 
         if($human_id>0 && $wearMaskStatus != 1){
-            cache(['message' => $name.' detected without mask', 'last_update' => now()]);
+            cache(['message' => $name.' detected without mask', 'last_update' => Carbon::now()]);
         }
 
         if($eventType == '3073' && $status == 1){
             cache(['message' => 'Phone call detected', 'last_update' => now()]);
         }
-        
+
         return response()->json(['message' => 'Event received successfully']);
     }
 }
