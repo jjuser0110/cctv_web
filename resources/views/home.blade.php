@@ -137,7 +137,7 @@
               console.log(res);
               console.log(res.message, res.messagetime);
               if (!res.messagetime) return;
-              let lastTime = sessionStorage.getItem('lastTime');
+              var lastTime = sessionStorage.getItem('lastTime');
               console.log(lastTime);
               // Only trigger if new
               if (lastTime !== res.messagetime) {
