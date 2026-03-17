@@ -25,16 +25,30 @@ class ApiController extends Controller
         Log::info('Motion detected: ' . $request->getContent());
         $response_data = json_decode($request->getContent(), true);
         // Process the event data as needed
+        $human_id = $response_data['params']['events'][0]['data']['alarmResult']['faces']['identify']['candidate']['human_id'] ?? null;
+        $name = $response_data['params']['events'][0]['data']['alarmResult']['faces']['identify']['candidate']['reserve_field']['name'] ?? null;
+        $wearMaskStatus = $response_data['params']['events'][0]['data']['alarmResult']['faces']['mask']['wearMaskStatus'] ?? null;
+        $eventType = $response_data['params']['events'][0]['eventType'] ?? null;
+        $status = $response_data['params']['events'][0]['status'] ?? null;
         AlertResponse::create([
             'sendTime' => Carbon::parse($response_data['params']['sendTime'] ?? null),
             'eventId' => $response_data['params']['events'][0]['eventId'] ?? null,
-            'eventType' => $response_data['params']['events'][0]['eventType'] ?? null,
-            'status' => $response_data['params']['events'][0]['status'] ?? null,
-            'human_id' => $response_data['params']['events'][0]['data']['alarmResult']['faces']['identify']['candidate']['human_id'] ?? null,
-            'name' => $response_data['params']['events'][0]['data']['alarmResult']['faces']['identify']['candidate']['reserve_field']['name'] ?? null,
-            'wearMaskStatus' => $response_data['params']['events'][0]['data']['alarmResult']['faces']['mask']['wearMaskStatus'] ?? null,
+            'eventType' => $eventType,
+            'status' => $status,
+            'human_id' => $human_id,
+            'name' => $name,
+            'wearMaskStatus' => $wearMaskStatus,
             'response_data' => $response_data,
         ]);
+
+        if($human_id>0 && $wearMaskStatus != 1){
+            cache(['message' => $name.' detected without mask', 'last_update' => now()]);
+        }
+
+        if($eventType == '3073' && $status == 1){
+            cache(['message' => 'Phone call detected', 'last_update' => now()]);
+        }
+        
         return response()->json(['message' => 'Event received successfully']);
     }
 }

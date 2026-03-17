@@ -106,4 +106,12 @@ class HomeController extends Controller
 
         return redirect()->route('home')->withSuccess('Password changed successfully.');
     }
+
+    public function getPopup()
+    {
+        return response()->json([
+            'message' => cache('message'),
+            'time' => cache('last_update')
+        ]);
+    }
 }

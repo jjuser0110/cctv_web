@@ -93,10 +93,51 @@
     </div>
   </div>
 </div>
+<div id="popup" style="
+    display:none;
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:red;
+    color:white;
+    padding:15px;
+    border-radius:5px;
+    z-index:9999;
+"></div>
 <!-- / Content -->
 
 @endsection
 @section('page-js')
 @endsection
 @section('scripts')
+<script>
+  let lastTime = null;
+
+  setInterval(() => {
+      fetch('/popup')
+          .then(res => res.json())
+          .then(res => {
+
+              if (!res.time) return;
+
+              // Only trigger if new
+              if (lastTime !== res.time) {
+                  lastTime = res.time;
+
+                  showPopup(res.message);
+              }
+          });
+  }, 2000); // every 2 seconds
+
+  function showPopup(message) {
+      let popup = document.getElementById('popup');
+
+      popup.innerText = message;
+      popup.style.display = 'block';
+
+      setTimeout(() => {
+          popup.style.display = 'none';
+      }, 3000);
+  }
+</script>
 @endsection
