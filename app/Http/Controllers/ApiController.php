@@ -46,13 +46,13 @@ class ApiController extends Controller
         if($human_id>0 && $wearMaskStatus != 1){
             Cache::put('message', $name.' detected without mask');
             Cache::put('messagetime', $sendTime->timestamp);
-            Log::info(Cache::get('message'). ' at ' . Cache::get('messagetime'));
+            // Log::info(Cache::get('message'). ' at ' . Cache::get('messagetime'));
         }
 
         if($eventType == '3073' && $status == 1){
             Cache::put('message', 'Phone call detected');
             Cache::put('messagetime', $sendTime->timestamp);
-            Log::info('Phone call detected: at ' . Cache::get('messagetime'));
+            // Log::info('Phone call detected: at ' . Cache::get('messagetime'));
         }
 
         return response()->json(['message' => 'Event received successfully']);

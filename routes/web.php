@@ -27,6 +27,7 @@ Route::post('/change_password', [App\Http\Controllers\HomeController::class, 'ch
 Route::get('/popup', function () {
     $message = Cache::get('message');
     $messagetime = Cache::get('messagetime');
+    Log::info($message. ' at ' . $messagetime);
 
     return response()->json([
         'message' => $message,
