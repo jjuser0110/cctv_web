@@ -17,6 +17,7 @@ use App\Models\UserBonus;
 use App\Models\UserFirstDeposit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 class ApiController extends Controller
 {
@@ -43,12 +44,14 @@ class ApiController extends Controller
         ]);
 
         if($human_id>0 && $wearMaskStatus != 1){
-            cache(['message' => $name.' detected without mask', 'messagetime' => $sendTime->timestamp]);
+            Cache::put('message', $name.' detected without mask');
+            Cache::put('messagetime', $sendTime->timestamp);
             Log::info(Cache::get('message'). ' at ' . Cache::get('messagetime'));
         }
 
         if($eventType == '3073' && $status == 1){
-            cache(['message' => 'Phone call detected', 'messagetime' => $sendTime->timestamp]);
+            Cache::put('message', 'Phone call detected');
+            Cache::put('messagetime', $sendTime->timestamp);
             Log::info('Phone call detected: at ' . Cache::get('messagetime'));
         }
 
