@@ -134,13 +134,13 @@
       fetch('/popup')
           .then(res => res.json())
           .then(res => {
-              console.log(res);
+              // console.log(res);
               console.log(res.message, res.messagetime);
               if (!res.messagetime) return;
               var lastTime = sessionStorage.getItem('lastTime');
               console.log(lastTime);
               // Only trigger if new
-              if (lastTime !== res.messagetime) {
+              if (lastTime != res.messagetime) {
                   sessionStorage.setItem('lastTime', res.messagetime);
                   showPopup(res.message, res.messagetime);
               }
