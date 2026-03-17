@@ -26,11 +26,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::post('/change_password', [App\Http\Controllers\HomeController::class, 'change_password'])->name('change_password');
 Route::get('/popup', function () {
     $message = Cache::get('message');
-    $lastUpdate = Cache::get('last_update');
+    $messagetime = Cache::get('messagetime');
 
     return response()->json([
         'message' => $message,
-        'time' => $lastUpdate ? $lastUpdate->timestamp : null
+        'messagetime' => $messagetime
     ]);
 });
 

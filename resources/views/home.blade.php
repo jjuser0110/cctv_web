@@ -135,25 +135,20 @@
       fetch('/popup')
           .then(res => res.json())
           .then(res => {
-              console.log(lastTime, res.message, res.time);
-              if (!res.time) return;
+              console.log(lastTime, res.message, res.messagetime);
+              if (!res.messagetime) return;
 
               // Only trigger if new
-              if (lastTime !== res.time) {
-                  lastTime = res.time;
-
-                  showPopup(res.message, res.time);
+              if (lastTime !== res.messagetime) {
+                  lastTime = res.messagetime;
+                  showPopup(res.message, res.messagetime);
               }
           });
   }, 2000); // every 2 seconds
 
-  function showPopup(message, time) {
-    // Set message
+  function showPopup(message, messagetime) {
     document.getElementById('popupMessage').innerText = message;
-
-    // Format timestamp into readable date/time
-    let date = new Date(timestamp * 1000); // convert seconds → ms
-    document.getElementById('popupTime').innerText = date.toLocaleString();
+    document.getElementById('popupTime').innerText = messagetime;
 
     // Show Bootstrap modal
     let modal = new bootstrap.Modal(document.getElementById('popoutModal'));

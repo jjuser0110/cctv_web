@@ -30,8 +30,9 @@ class ApiController extends Controller
         $wearMaskStatus = $response_data['params']['events'][0]['data']['alarmResult']['faces']['mask']['wearMaskStatus'] ?? null;
         $eventType = $response_data['params']['events'][0]['eventType'] ?? null;
         $status = $response_data['params']['events'][0]['status'] ?? null;
+        $sendTime = Carbon::parse($response_data['params']['sendTime'] ?? now());
         AlertResponse::create([
-            'sendTime' => Carbon::parse($response_data['params']['sendTime'] ?? null),
+            'sendTime' => $sendTime,
             'eventId' => $response_data['params']['events'][0]['eventId'] ?? null,
             'eventType' => $eventType,
             'status' => $status,
@@ -42,11 +43,11 @@ class ApiController extends Controller
         ]);
 
         if($human_id>0 && $wearMaskStatus != 1){
-            cache(['message' => $name.' detected without mask', 'last_update' => Carbon::parse($response_data['params']['sendTime'] ?? null)]);
+            cache(['message' => $name.' detected without mask', 'messagetime' => $sendTime]);
         }
 
         if($eventType == '3073' && $status == 1){
-            cache(['message' => 'Phone call detected', 'last_update' => Carbon::parse($response_data['params']['sendTime'] ?? null)]);
+            cache(['message' => 'Phone call detected', 'messagetime' => $sendTime]);
         }
 
         return response()->json(['message' => 'Event received successfully']);
