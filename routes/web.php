@@ -30,7 +30,7 @@ Route::get('/popup', function () {
 
     return response()->json([
         'message' => $message,
-        'messagetime' => $messagetime
+        'messagetime' => $messagetime ? Carbon::parse($messagetime)->timestamp : 'not found'
     ]);
 });
 
