@@ -135,7 +135,7 @@
       fetch('/popup')
           .then(res => res.json())
           .then(res => {
-
+              console.log(res.time, lastTime, res.message);
               if (!res.time) return;
 
               // Only trigger if new
